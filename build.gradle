@@ -5,19 +5,50 @@ plugins {
 }
 
 group = 'team.bakkas'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
 }
 
+// gradle에서 사용할 변수 정의
+ext {
+    set('springCloudVersion', "2020.0.2")
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // lombok
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+
+    implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws'
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.8.0'
+
+    // 로컬 테스트를 위한 의존성
+    implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// zip 파일로 압축하기
+task buildzip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
+    }
 }
