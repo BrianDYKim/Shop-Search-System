@@ -14,4 +14,6 @@ public interface ShopAdvancedRepository {
      * @return List of shop
      */
     List<Shop> withInSearch(final GeoPoint geoPoint, final Double distance, final String unit);
+
+    // TODO 특정 반경 내에서 배달팁 낮은 순으로 검색하기
 }
