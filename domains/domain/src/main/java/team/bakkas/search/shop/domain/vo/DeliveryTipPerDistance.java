@@ -15,4 +15,8 @@ public class DeliveryTipPerDistance {
 
     @Field(type = FieldType.Integer)
     private Integer price;
+
+    public static DeliveryTipPerDistance of(final Double distance, final Integer price) {
+        return new DeliveryTipPerDistance(distance, price);
+    }
 }
