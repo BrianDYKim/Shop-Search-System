@@ -3,7 +3,7 @@ package team.bakkas.search.shop.application;
 import team.bakkas.search.shop.domain.dto.request.CategoryWithInSearchRequest;
 import team.bakkas.search.shop.domain.dto.request.DetailCategoryWithInSearchRequest;
 import team.bakkas.search.shop.domain.dto.request.ShopNameWithInSearchRequest;
-import team.bakkas.search.shop.domain.dto.request.WithinSearchRequest;
+import team.bakkas.search.shop.domain.dto.request.WithInSearchRequest;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface ShopService {
      * @param request request
      * @return list of shopId
      */
-    List<String> withInSearch(WithinSearchRequest request);
+    List<String> withInSearch(WithInSearchRequest request);
 
     /**
      * @param request request

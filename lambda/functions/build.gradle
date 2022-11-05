@@ -4,13 +4,14 @@ ext {
 }
 
 dependencies {
+    implementation(project(":domains-domain"))
 
     implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws'
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
     implementation 'com.amazonaws:aws-lambda-java-events:3.8.0'
 
     // 로컬 테스트를 위한 의존성
-    implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
+    // implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
 }
 
 dependencyManagement {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import team.bakkas.search.shop.domain.dto.request.CategoryWithInSearchRequest;
 import team.bakkas.search.shop.domain.dto.request.DetailCategoryWithInSearchRequest;
 import team.bakkas.search.shop.domain.dto.request.ShopNameWithInSearchRequest;
-import team.bakkas.search.shop.domain.dto.request.WithinSearchRequest;
+import team.bakkas.search.shop.domain.dto.request.WithInSearchRequest;
 import team.bakkas.search.shop.domain.persist.Shop;
 import team.bakkas.search.shop.domain.persist.ShopRepository;
 
@@ -25,7 +25,7 @@ public class ShopServiceImpl implements ShopService {
     private final ShopRepository shopRepository;
 
     @Override
-    public List<String> withInSearch(WithinSearchRequest request) {
+    public List<String> withInSearch(WithInSearchRequest request) {
         GeoPoint geoPoint = new GeoPoint(request.getLatitude(), request.getLongitude());
         PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
 

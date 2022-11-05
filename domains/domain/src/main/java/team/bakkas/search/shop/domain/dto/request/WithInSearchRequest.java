@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class WithinSearchRequest {
+public class WithInSearchRequest {
     private Double latitude;
 
     private Double longitude;
