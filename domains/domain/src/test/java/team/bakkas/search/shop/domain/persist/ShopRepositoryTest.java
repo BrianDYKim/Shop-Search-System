@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.data.geo.Point;
 import team.bakkas.search.shop.domain.vo.Category;
@@ -21,13 +22,16 @@ class ShopRepositoryTest {
     @Autowired
     private ShopRepository shopRepository;
 
+    // 영남대학교 기준 위치
+    private final GeoPoint yeoungnamUniversityLocation = new GeoPoint(35.8331655, 128.7580143);
+
     @Test
     @DisplayName("Create Test")
     void createTest() {
         // given
         // lat: 35.8395559, lon: 128.7073095
         String shopId = UUID.randomUUID().toString();
-        String shopName = "버거킹 대구시지점";
+        String shopName = "버거킹 경산사동점";
         List<DeliveryTipPerDistance> deliveryTipPerDistanceList = List.of(
                 DeliveryTipPerDistance.of(10.0, 1500),
                 DeliveryTipPerDistance.of(20.0, 2500)
@@ -35,10 +39,11 @@ class ShopRepositoryTest {
         Shop targetShop = Shop.builder()
                 .shopId(shopId)
                 .shopName(shopName)
+                .businessNumber("3333-33333-33333")
                 .status(Status.CLOSE)
-                .location(GeoPoint.fromPoint(new Point(128.7073095, 35.8395559))) // longitude, latitude 순
-                .category(Category.MART)
-                .detailCategory(DetailCategory.SUPER_MARKET)
+                .location(new GeoPoint(35.8112231, 128.7538589))
+                .category(Category.FOOD_BEVERAGE)
+                .detailCategory(DetailCategory.FAST_FOOD)
                 .averageScore(0.0)
                 .deliveryTipPerDistanceList(deliveryTipPerDistanceList)
                 .build();
@@ -69,15 +74,67 @@ class ShopRepositoryTest {
         GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 
         // 검색 반경
-        Double radius = 10.0;
+        Double radius = 20.0;
         String unit = "km";
 
+        // Pagination
+        PageRequest pageRequest = PageRequest.of(0, 100);
+
         // when
-        List<Shop> shops = shopRepository.withInSearch(geoPoint, radius, unit);
+        List<Shop> shops = shopRepository.withInSearch(geoPoint, radius, unit, pageRequest);
 
         // then
         shops.forEach(shop -> System.out.println(shop.getShopName()));
     }
 
+    @Test
+    @DisplayName("카테고리 10km 반경검색 테스트")
+    void searchCategoryTest() {
+        // given
+        Category category = Category.FOOD_BEVERAGE;
+        Double distance = 10.0;
+        String unit = "km";
 
+        PageRequest pageRequest = PageRequest.of(0, 100);
+
+        // when
+        List<Shop> shops = shopRepository.searchByCategoryWithIn(Category.FOOD_BEVERAGE, yeoungnamUniversityLocation, distance, unit, pageRequest);
+
+        // then
+        shops.forEach(shop -> System.out.println(shop.getShopName()));
+    }
+
+    @Test
+    @DisplayName("세부 카테고리 10km 반경 검색 테스트")
+    void searchDetailCategoryTest() {
+        // given
+        DetailCategory detailCategory = DetailCategory.CAFE_BREAD;
+        Double distance = 10.0;
+        String unit = "km";
+
+        PageRequest pageRequest = PageRequest.of(0, 100);
+
+        // when
+        List<Shop> shops = shopRepository.searchByDetailCategoryWithIn(detailCategory, yeoungnamUniversityLocation, distance, unit, pageRequest);
+
+        // then
+        shops.forEach(shop -> System.out.println(shop.getShopName()));
+    }
+
+    @Test
+    @DisplayName("shopName 10km 반경 검색 테스트")
+    void searchByShopNameWithInTest() {
+        // given
+        String shopName = "버거킹";
+        Double distance = 10.0;
+        String unit = "km";
+
+        PageRequest pageRequest = PageRequest.of(0, 100);
+
+        // when
+        List<Shop> shops = shopRepository.searchByShopNameWithIn(shopName, yeoungnamUniversityLocation, distance, unit, pageRequest);
+
+        // then
+        shops.forEach(shop -> System.out.println(shop.getShopName()));
+    }
 }
