@@ -42,6 +42,12 @@ public class Shop {
     @Field(type = FieldType.Keyword, name = "detail_category")
     private DetailCategory detailCategory;
 
+    @Field(type = FieldType.Double, name = "total_score")
+    private Double totalScore;
+
+    @Field(type = FieldType.Integer, name = "review_number")
+    private Integer reviewNumber;
+
     @Field(type = FieldType.Double, name = "average_score")
     private Double averageScore; // 평점의 평균 값
 
