@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface ShopRepository extends ElasticsearchRepository<Shop, String>, ShopAdvancedRepository {
 
-    List<Shop> findAllByShopName(final String shopName);
+    List<Shop> findAllByShopName(String shopName);
 }

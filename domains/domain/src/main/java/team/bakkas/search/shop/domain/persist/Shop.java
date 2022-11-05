@@ -21,6 +21,7 @@ import java.util.List;
 @Builder
 public class Shop {
     @Id
+    @Field(type = FieldType.Keyword, name = "shop_id")
     private String shopId;
 
     @Field(type = FieldType.Text, name = "shop_name")
