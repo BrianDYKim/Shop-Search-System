@@ -43,4 +43,7 @@ public class Shop {
 
     @Field(type = FieldType.Double, name = "average_score")
     private Double averageScore; // 평점의 평균 값
+
+    @Field(type = FieldType.Keyword, name = "business_number")
+    private String businessNumber; // 사업자 등록번호
 }

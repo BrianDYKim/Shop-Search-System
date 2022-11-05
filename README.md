@@ -39,6 +39,9 @@
         "type": "text", 
         "analyzer": "korean_mixed_analyzer"
       }, 
+      "business_number": {
+        "type": "keyword"
+      },
       "location": {
         "type": "geo_point"
       }, 
