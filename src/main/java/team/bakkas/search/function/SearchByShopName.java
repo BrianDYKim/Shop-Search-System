@@ -1,9 +1,9 @@
-package team.bakkas.search.functions;
+package team.bakkas.search.function;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import team.bakkas.search.shop.application.ShopService;
-import team.bakkas.search.shop.domain.dto.request.DetailCategoryWithInSearchRequest;
+import team.bakkas.search.shop.domain.dto.request.ShopNameWithInSearchRequest;
 
 import java.util.List;
 import java.util.function.Function;
@@ -15,11 +15,11 @@ import java.util.function.Function;
  */
 @Component
 @RequiredArgsConstructor
-public class SearchByDetailCategory implements Function<DetailCategoryWithInSearchRequest, List<String>> {
+public class SearchByShopName implements Function<ShopNameWithInSearchRequest, List<String>> {
     private final ShopService shopService;
 
     @Override
-    public List<String> apply(DetailCategoryWithInSearchRequest request) {
-        return shopService.searchByDetailCategoryWithIn(request);
+    public List<String> apply(ShopNameWithInSearchRequest request) {
+        return shopService.searchByShopNameWithIn(request);
     }
 }
