@@ -1,6 +1,6 @@
 rootProject.name = 'Shop-Search-System'
 
-["domains", "event", "lambda"].each {
+["domains", "lambda"].each {
 
     def compDir = new File(rootDir, it)
     if(!compDir.exists()){

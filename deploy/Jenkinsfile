@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    environment {
+
+    }
+
+    stages {
+        stage("Build functions module") {
+
+        }
+
+        stage("Push to S3") {
+
+        }
+
+        stage("Fargate Update") {
+
+        }
+    }
+}

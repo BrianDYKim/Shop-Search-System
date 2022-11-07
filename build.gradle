@@ -65,7 +65,7 @@ subprojects {
     }
 }
 
-["event", "lambda"].each {
+["lambda"].each {
     def subProjectDir = new File(projectDir, it)
 
     subProjectDir.eachDir { dir ->
