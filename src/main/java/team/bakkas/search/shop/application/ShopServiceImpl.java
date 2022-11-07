@@ -25,7 +25,7 @@ public class ShopServiceImpl implements ShopService {
     private final ShopRepository shopRepository;
 
     @Override
-    public List<String> withInSearch(WithInSearchRequest request) {
+    public List<String> searchWithIn(WithInSearchRequest request) {
         GeoPoint geoPoint = new GeoPoint(request.getLatitude(), request.getLongitude());
         PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
 

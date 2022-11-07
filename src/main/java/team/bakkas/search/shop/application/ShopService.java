@@ -13,7 +13,7 @@ public interface ShopService {
      * @param request request
      * @return list of shopId
      */
-    List<String> withInSearch(WithInSearchRequest request);
+    List<String> searchWithIn(WithInSearchRequest request);
 
     /**
      * @param request request
