@@ -28,4 +28,18 @@ public class DetailCategoryWithInSearchRequest {
     private Integer page;
 
     private Integer size;
+
+    public static DetailCategoryWithInSearchRequest of(final DetailCategory detailCategory, final Double latitude, final Double longitude, final Double distance,
+                                                       final String unit, final Integer page, final Integer size) {
+
+        return DetailCategoryWithInSearchRequest.builder()
+                .detailCategory(detailCategory)
+                .latitude(latitude)
+                .longitude(longitude)
+                .distance(distance)
+                .unit(unit)
+                .page(page)
+                .size(size)
+                .build();
+    }
 }

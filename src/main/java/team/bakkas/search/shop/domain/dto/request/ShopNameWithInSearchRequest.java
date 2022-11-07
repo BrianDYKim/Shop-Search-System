@@ -27,4 +27,18 @@ public class ShopNameWithInSearchRequest {
     private Integer page;
 
     private Integer size;
+
+    public static ShopNameWithInSearchRequest of(final String shopName, final Double latitude, final Double longitude, final Double distance,
+                                                 final String unit, final Integer page, final Integer size) {
+
+        return ShopNameWithInSearchRequest.builder()
+                .shopName(shopName)
+                .latitude(latitude)
+                .longitude(longitude)
+                .distance(distance)
+                .unit(unit)
+                .page(page)
+                .size(size)
+                .build();
+    }
 }

@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class WithInSearchRequest {
+public class SearchWithInRequest {
     private Double latitude;
 
     private Double longitude;
@@ -24,10 +24,10 @@ public class WithInSearchRequest {
 
     private Integer size;
 
-    public static WithInSearchRequest of(final Double latitude, final Double longitude, final Double distance,
+    public static SearchWithInRequest of(final Double latitude, final Double longitude, final Double distance,
                                          final String unit, final Integer page, final Integer size) {
 
-        return WithInSearchRequest.builder()
+        return SearchWithInRequest.builder()
                 .latitude(latitude)
                 .longitude(longitude)
                 .distance(distance)
