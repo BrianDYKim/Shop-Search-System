@@ -1,74 +1,60 @@
-buildscript {
-    ext {
-        springBootVersion = '2.7.5'
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
-    }
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
 }
+
+group = 'team.bakkas'
+version = '0.0.1'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
 }
 
-allprojects {
-    group = 'team.bakkas'
-    version = '0.0.1'
+// gradle에서 사용할 변수 정의
+ext {
+    set('springCloudVersion', "2020.0.2")
 }
 
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
+dependencies {
+    // lombok
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
 
-    sourceCompatibility = '11'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    repositories {
-        mavenCentral()
-    }
+    // for test
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.12.4'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.12.4'
 
-    dependencies {
-        // lombok
-        annotationProcessor("org.projectlombok:lombok")
-        compileOnly("org.projectlombok:lombok")
+    // Elasticsearch
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
-        // Spring MVC
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws'
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.8.0'
 
-        // for test
-        testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.12.4'
-        testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.12.4'
-    }
-
-    tasks.named('test') {
-        useJUnitPlatform()
-    }
+    // 로컬 테스트를 위한 의존성
+    // implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
 }
 
-["domains"].each {
-    def subProjectDir = new File(projectDir, it)
+tasks.named('test') {
+    useJUnitPlatform()
+}
 
-    subProjectDir.eachDir {dir ->
-        def projectName = ":${it}-${dir.name}"
-
-        // domain은 bootJar = false로 맞춰서 jar 생성을 막는다
-        project(projectName) {
-            bootJar.enabled(false)
-            jar.enabled(true)
-        }
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
-["lambda"].each {
-    def subProjectDir = new File(projectDir, it)
-
-    subProjectDir.eachDir { dir ->
-        def projectName = ":${it}-${dir.name}"
+// zip 파일로 압축하기
+task buildzip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
     }
 }
