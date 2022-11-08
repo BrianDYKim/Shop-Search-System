@@ -2,7 +2,6 @@ package team.bakkas.search.shop.presentation;
 
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import net.devh.boot.grpc.server.service.GrpcService;
 import team.bakkas.search.shop.application.ShopService;
 import team.bakkas.search.shop.domain.dto.request.CategoryWithInSearchRequest;
 import team.bakkas.search.shop.domain.dto.request.DetailCategoryWithInSearchRequest;
@@ -14,7 +13,6 @@ import team.bakkas.shop.search.*;
 
 import java.util.List;
 
-@GrpcService
 @RequiredArgsConstructor
 public class ShopSearchGrpcService extends ShopSearchGrpc.ShopSearchImplBase {
 
@@ -27,7 +25,7 @@ public class ShopSearchGrpcService extends ShopSearchGrpc.ShopSearchImplBase {
         List<String> searchResults = shopService.searchWithIn(searchRequest);
 
         SearchResponse grpcResponse = SearchResponse.newBuilder()
-                .addAllIds(searchResults)
+                .addAllIdList(searchResults)
                 .build();
 
         responseObserver.onNext(grpcResponse);
@@ -41,7 +39,7 @@ public class ShopSearchGrpcService extends ShopSearchGrpc.ShopSearchImplBase {
         List<String> searchResults = shopService.searchByShopNameWithIn(searchRequest);
 
         SearchResponse grpcResponse = SearchResponse.newBuilder()
-                .addAllIds(searchResults)
+                .addAllIdList(searchResults)
                 .build();
 
         responseObserver.onNext(grpcResponse);
@@ -55,7 +53,7 @@ public class ShopSearchGrpcService extends ShopSearchGrpc.ShopSearchImplBase {
         List<String> searchResults = shopService.searchByCategoryWithIn(searchRequest);
 
         SearchResponse grpcResponse = SearchResponse.newBuilder()
-                .addAllIds(searchResults)
+                .addAllIdList(searchResults)
                 .build();
 
         responseObserver.onNext(grpcResponse);
@@ -69,7 +67,7 @@ public class ShopSearchGrpcService extends ShopSearchGrpc.ShopSearchImplBase {
         List<String> searchResults = shopService.searchByDetailCategoryWithIn(searchRequest);
 
         SearchResponse grpcResponse = SearchResponse.newBuilder()
-                .addAllIds(searchResults)
+                .addAllIdList(searchResults)
                 .build();
 
         responseObserver.onNext(grpcResponse);
